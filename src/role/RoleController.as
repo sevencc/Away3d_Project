@@ -1,4 +1,4 @@
-package controllers
+package role
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -11,28 +11,26 @@ package controllers
 
 	public class RoleController extends Sprite
 	{
+		protected var _stage:Stage;
+		
 		public var speed:Number=8;
 		public var angleValue:Number=3;
 		
-		private var _stage:Stage;
-		private var _role:Mesh;
-		
-		private var _keyUp:Boolean;
-		private var _keyDown:Boolean;
-		private var _keyLeft:Boolean;
-		private var _keyRight:Boolean;
+		protected var _keyUp:Boolean;
+		protected var _keyDown:Boolean;
+		protected var _keyLeft:Boolean;
+		protected var _keyRight:Boolean;
 			
-		public function RoleController(p_roleMesh:Mesh,p_stage:Stage)
+		public function RoleController(p_stage:Stage)
 		{
-			_role = p_roleMesh;
 			_stage = p_stage;
 			
 			_stage.addEventListener(KeyboardEvent.KEY_DOWN,keyDownHandler);
 			_stage.addEventListener(KeyboardEvent.KEY_UP,keyUpHandler);
-			this.addEventListener(Event.ENTER_FRAME,enterHandler);
+			_stage.addEventListener(Event.ENTER_FRAME,enterHandler);
 		}
 		
-		private function keyDownHandler(evt:KeyboardEvent):void
+		protected function keyDownHandler(evt:KeyboardEvent):void
 		{
 			switch(evt.keyCode)
 			{
@@ -55,7 +53,7 @@ package controllers
 			}
 		}
 		
-		private function keyUpHandler(evt:KeyboardEvent):void
+		protected function keyUpHandler(evt:KeyboardEvent):void
 		{
 			switch(evt.keyCode)
 			{
@@ -77,7 +75,7 @@ package controllers
 		}
 		
 		
-		private function enterHandler(evt:Event):void
+		protected function enterHandler(evt:Event):void
 		{
 			var vx:Number = 0;
 			if(_keyUp)
@@ -103,27 +101,35 @@ package controllers
 			else if(_keyRight){
 				vx = 270;
 			}
-			
-			if(_keyUp||_keyDown||_keyRight||_keyLeft)
+			/*var move:Boolean = false;
+			if(canJump())
 			{
-				_role.x -= speed * Math.sin((_role.rotationY - vx)/ 180 * Math.PI);
-				_role.z -= speed * Math.cos((_role.rotationY - vx)/ 180 * Math.PI);
+				if(_keyUp||_keyDown||_keyRight||_keyLeft)
+				{
+					_ans.changeAnimation("walk");
+					move = true;
+				}else{
+					_ans.changeAnimation("idle");
+				}
+			}else{
+				move = true;
 			}
+			if(move)
+			{
+				ghostObject.x -= speed * Math.sin((_ans.mesh.rotationY - vx)/ 180 * Math.PI);
+				ghostObject.z -= speed * Math.cos((_ans.mesh.rotationY - vx)/ 180 * Math.PI);
+			}*/
 		}
 		
 		public function setPostion(p_pos:Vector3D):void
 		{
-			_role.position = p_pos;
+//			_role.position = p_pos;
 		}
 		
 		public function setPanAngle(p_panAngle:Number):void
 		{
-			_role.rotationY = p_panAngle;
+//			_role.rotationY = p_panAngle;
 		}
 		
-		public function get mesh():Mesh
-		{
-			return _role;
-		}
 	}
 }
